@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
+import cv2
 
 
 class Lobsterator:
@@ -12,7 +13,7 @@ class Lobsterator:
 
     def lobsterate(self):
         if not os.path.exists(self.img_path):
-            raise IOError("Изображение по данному пути не найдено: "+ self.img_path)
+            raise IOError("Изображение по данному пути не найдено: " + self.img_path)
 
         img = Image.open(self.img_path)
         font = ImageFont.truetype(r"lobster\lobster.ttf", 52)
