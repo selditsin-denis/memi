@@ -27,4 +27,7 @@ class Lobsterator:
         ext = filename.split(".")[-1].upper()
         if not os.path.exists("result"):
             os.mkdir("result")
-        img.save(rf"result\{filename}", ext)
+        path = rf"result\{filename}"
+        img.save(path, ext)
+
+        return path
