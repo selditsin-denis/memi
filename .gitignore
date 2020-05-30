@@ -2,3 +2,5 @@ venv/
 .idea/
 vendor/
 result/
+test.php
+ml5/images/dataset
