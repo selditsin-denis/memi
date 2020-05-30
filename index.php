@@ -14,7 +14,6 @@ foreach ($contents as $content)
     $en_text = $content['text'];
 
     $ru_text = Translator::translate($en_text);
-    $lobsterator = new Lobsterator("ml5/".$img_path, $ru_text.")");
-    $lobsterator->lobsterate();
-    echo $lobsterator->getResultPath();
+    $lobsterator = Lobsterator::lobsterate("ml5/".$img_path, $ru_text.")");
+    echo $lobsterator;
 }
