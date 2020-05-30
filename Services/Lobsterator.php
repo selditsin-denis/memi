@@ -16,13 +16,14 @@ class Lobsterator
 
     public static function lobsterate(string $img_path, string $text): string
     {
+        $word = explode(",", $text)[0].")";
         $colorArray = array(255, 255, 255);
         $ih = new LImageHandler;
         $imgObj = $ih->load($img_path);
         $width = $imgObj->getWidth();
         $height = $imgObj->getHeight();
-        $fontSize = self::getFontSize($width, $height);
-        $imgObj->text($text, self::FONT_PATH, $fontSize, $colorArray, LImageHandler::CORNER_CENTER_BOTTOM, 0, 50);
+        $fontSize = self::getFontSize($width, strlen($word)/2);
+        $imgObj->text($word, self::FONT_PATH, $fontSize, $colorArray, LImageHandler::CORNER_CENTER_BOTTOM, 0, $height/11);
         $f_array = explode("/", $img_path);
         $filename = end($f_array);
         if(!is_dir("result")) {
@@ -31,12 +32,18 @@ class Lobsterator
         $result = "result/{$filename}";
         $imgObj->save($result);
 
+//        echo $width."x".$height.":".$fontSize;
         return $result;
     }
 
-    private static function getFontSize(int $width, int $height): int
+    private static function getFontSize(int $width, int $textLength): int
     {
-        // TODO: определение размера шрифта в зависимости от размера картинки
-        return 45;
+        $k = 0.65;
+        if($textLength > 20){
+            $k = 1.3;
+        }elseif ($textLength <= 5){
+            $k = 0.4;
+        }
+        return $width / $textLength * $k;
     }
 }

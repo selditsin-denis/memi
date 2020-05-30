@@ -32,8 +32,6 @@ class Translator
         curl_close($ch);
 
         $result = json_decode($html, true);
-
-        echo $result['text'][0];
         return $result['text'][0];
     }
 }

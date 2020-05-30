@@ -11,7 +11,8 @@
     ],
     "require": {
       "ext-json": "*",
-      "ext-curl": "*"
+      "ext-curl": "*",
+      "ext-fileinfo": "*"
     },
     "autoload": {
         "psr-4": {
