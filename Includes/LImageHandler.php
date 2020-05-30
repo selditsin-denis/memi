@@ -1,6 +1,8 @@
 <?php
 
 namespace Includes;
+use Exception;
+
 /**
  * Image handler
  * @author Yaroslav Pelesh aka Tokolist http://tokolist.com. Extended by Victor Zinchenko aka lukesky

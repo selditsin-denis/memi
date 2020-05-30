@@ -9,7 +9,10 @@
             "email": "denis.selditsin@ya.ru"
         }
     ],
-    "require": {},
+    "require": {
+      "ext-json": "*",
+      "ext-curl": "*"
+    },
     "autoload": {
         "psr-4": {
             "Services\\": "Services",
