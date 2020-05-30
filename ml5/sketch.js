@@ -17,11 +17,11 @@ function appendImages() {
 }
 
 function preload() {
-  data = loadJSON('assets/data.json');
+  data = loadJSON('ml5/assets/data.json');
 }
 
 function getImagePath(imgPath) {
-  fullPath = 'images/dataset/';
+  fullPath = 'ml5/images/dataset/';
   fullPath = fullPath + imgPath;
   return fullPath
 }
@@ -60,8 +60,22 @@ function printJson(){
         }
     )
   }
-  var json = JSON.stringify(result);
-  document.writeln(json)
+  let json = JSON.stringify(result);
+  sendJson(json)
+}
+
+function sendJson(json) {
+
+  let body = "json="+json
+  let request = new XMLHttpRequest();
+  request.open("POST", "worker.php");
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.onreadystatechange = function () {
+    if (request.readyState === 4 && request.status === 200)
+      document.getElementById("output").innerHTML=request.responseText;
+  }
+  request.send(body);
+
 }
 
 function removeImage() {
