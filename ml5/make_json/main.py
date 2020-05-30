@@ -9,7 +9,7 @@ for line in text:
     elif re.match('└── ', line):
         data["images"].append(line.split('└── ')[1].strip())
     else:
-        print line
+        print (line)
 
 with open('data.json', 'w') as f:
     json.dump(data, f)

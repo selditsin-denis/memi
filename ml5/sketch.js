@@ -4,8 +4,9 @@ const classifier = new ml5.ImageClassifier('MobileNet');
 let img;
 let currentIndex = 0;
 let allImages = [];
+let texts = []
 let display = true;
-let displayTime = 750;
+let displayTime = 1;
 let predictions = [];
 
 function appendImages() {
@@ -16,7 +17,7 @@ function appendImages() {
 }
 
 function preload() {
-  data = loadJSON('/assets/data.json');
+  data = loadJSON('assets/data.json');
 }
 
 function getImagePath(imgPath) {
@@ -45,7 +46,21 @@ function savePredictions() {
   predictionsJSON = {
     "predictions": predictions
   }
-  saveJSON(predictionsJSON, 'predictions.json');
+  // saveJSON(predictionsJSON, 'predictions.json');
+}
+
+function printJson(){
+  let result = []
+  for (i = 0; i<allImages.length;i++){
+    result.push(
+        {
+          image: allImages[i],
+          text: texts[i]
+        }
+    )
+  }
+  var json = JSON.stringify(result);
+  document.writeln(json)
 }
 
 function removeImage() {
@@ -54,6 +69,7 @@ function removeImage() {
     drawNextImage();
   } else {
     savePredictions();
+    printJson();
   }
 }
 
@@ -68,6 +84,7 @@ function gotResult(results) {
   if (display) {
     select('#result').html(results[0].label);
     setTimeout(removeImage, displayTime);
+    texts.push(results[0].label)
   } else {
     removeImage();
   }
