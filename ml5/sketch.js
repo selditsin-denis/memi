@@ -33,6 +33,7 @@ function drawNextImage() {
 function setup() {
   noCanvas();
   appendImages();
+  preload()
   img = createImg(allImages[0], imageReady);
 }
 
@@ -46,31 +47,29 @@ function savePredictions() {
   predictionsJSON = {
     "predictions": predictions
   }
-  // saveJSON(predictionsJSON, 'predictions.json');
+  //saveJSON(predictionsJSON, 'predictions.json');
 }
 
 function printJson(){
   let result = []
-  for (i = 0; i<allImages.length;i++){
-    result.push(
+  for (i = 0; i < allImages.length; i++){
+    result.push (
         {
           image: allImages[i],
           text: texts[i]
         }
     )
   }
-  let json = JSON.stringify(result);
+  var json = JSON.stringify(result);
   document.writeln(json)
 }
 
 function removeImage() {
   currentIndex++;
-  if (currentIndex <= allImages.length - 1) {
     drawNextImage();
-  } else {
     savePredictions();
     printJson();
-  }
+
 }
 
 // Когда получаем результат
@@ -80,12 +79,8 @@ function gotResult(results) {
     "result": results,
   }
   predictions.push(information);
-
-  if (display) {
-    select('#result').html(results[0].label);
+  select('#result').html(results[0].label);
     setTimeout(removeImage, displayTime);
     texts.push(results[0].label)
-  } else {
-    removeImage();
-  }
+
 }
