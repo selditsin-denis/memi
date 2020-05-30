@@ -25,6 +25,7 @@ class LImageHandler
     const IMG_GIF = 1;
     const IMG_JPEG = 2;
     const IMG_PNG = 3;
+    const IMG_WEBP = 18;
     const CORNER_LEFT_TOP = 1;
     const CORNER_RIGHT_TOP = 2;
     const CORNER_LEFT_BOTTOM = 3;
@@ -101,7 +102,15 @@ class LImageHandler
 
             $result['mimeType'] = $imageInfo['mime'];
 
+            var_dump( $imageInfo);
             switch ($result['format'] = $imageInfo[2]) {
+                case self::IMG_WEBP:
+                    if ($result['image'] = imagecreatefromwebp($file)) {
+                        return $result;
+                    } else {
+                        throw new Exception('Invalid image gif format');
+                    }
+                    break;
                 case self::IMG_GIF:
                     if ($result['image'] = imagecreatefromgif($file)) {
                         return $result;
@@ -596,6 +605,11 @@ class LImageHandler
         }
 
         switch ($toFormat) {
+            case self::IMG_WEBP:
+                if (!imagewebp($this->image, $file)) {
+                    throw new Exception('Can\'t save gif file');
+                }
+                break;
             case self::IMG_GIF:
                 if (!imagegif($this->image, $file)) {
                     throw new Exception('Can\'t save gif file');
