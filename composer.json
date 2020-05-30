@@ -1,0 +1,19 @@
+{
+    "name": "php-version/memi",
+    "description": "memi",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Denis",
+            "email": "denis.selditsin@ya.ru"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Services\\": "Services",
+            "Includes\\": "Includes"
+        }
+    }
+}

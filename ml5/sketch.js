@@ -59,7 +59,7 @@ function printJson(){
         }
     )
   }
-  var json = JSON.stringify(result);
+  let json = JSON.stringify(result);
   document.writeln(json)
 }
 
