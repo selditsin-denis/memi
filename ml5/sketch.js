@@ -66,9 +66,12 @@ function printJson(){
 
 function removeImage() {
   currentIndex++;
+  if (currentIndex <= allImages.length - 1) {
     drawNextImage();
+  } else {
     savePredictions();
     printJson();
+  }
 
 }
 
@@ -80,7 +83,8 @@ function gotResult(results) {
   }
   predictions.push(information);
   select('#result').html(results[0].label);
-    setTimeout(removeImage, displayTime);
-    texts.push(results[0].label)
+  setTimeout(removeImage, 0);
+  texts.push(results[0].label)
 
+  
 }
