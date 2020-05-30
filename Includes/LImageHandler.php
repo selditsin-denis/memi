@@ -102,7 +102,6 @@ class LImageHandler
 
             $result['mimeType'] = $imageInfo['mime'];
 
-            var_dump( $imageInfo);
             switch ($result['format'] = $imageInfo[2]) {
                 case self::IMG_WEBP:
                     if ($result['image'] = imagecreatefromwebp($file)) {

@@ -10,8 +10,18 @@
 </head>
 
 <body>
+<!--создаем json с именами картинок-->
+<?php
+    $json_file = fopen("ml5/assets/data.json", "w");
+    $images = ['images' => array_slice(scandir("ml5/images/dataset"), 2)];
+    $result = json_encode($images);
+    fwrite($json_file, $result);
+    fclose($json_file);
+?>
+
+
 <div id="output"></div>
-<p><span id="result">...</span><span>)</span><span id="probability">...</span></p>
+<p><span id="result">...</span></p>
 <script src="ml5/sketch.js"></script>
 
 </body>

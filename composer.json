@@ -12,7 +12,8 @@
     "require": {
       "ext-json": "*",
       "ext-curl": "*",
-      "ext-fileinfo": "*"
+      "ext-fileinfo": "*",
+      "ext-gd": "*"
     },
     "autoload": {
         "psr-4": {
