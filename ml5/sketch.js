@@ -28,6 +28,7 @@ function getImagePath(imgPath) {
 
 function drawNextImage() {
   img.attribute('src', allImages[currentIndex], imageReady);
+  img.attribute('hidden', '', imageReady);
 }
 
 function setup() {
@@ -35,6 +36,7 @@ function setup() {
   appendImages();
   preload()
   img = createImg(allImages[0], imageReady);
+  img.attribute('hidden', '', imageReady)
 }
 
 
@@ -73,18 +75,25 @@ function sendJson(json) {
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200)
       document.getElementById("output").innerHTML=request.responseText;
+      select('.progress-bar').attribute('style', 'width: 100%');
+    select('#status').html('Готово')
   }
   request.send(body);
 
 }
 
 function removeImage() {
+
   currentIndex++;
   if (currentIndex <= allImages.length - 1) {
     drawNextImage();
+    select('#status').html('Обработка: '+allImages[currentIndex])
+    let percent = (currentIndex/allImages.length)*100;
+    select('.progress-bar').attribute('style', 'width: '+ percent+'%');
   } else {
     savePredictions();
     printJson();
+    select('#status').html('Мемы готовятся к показу')
   }
 
 }
@@ -99,6 +108,4 @@ function gotResult(results) {
   select('#result').html(results[0].label);
   setTimeout(removeImage, 0);
   texts.push(results[0].label)
-
-  
 }

@@ -1,0 +1,17 @@
+.carousel-item img{
+    height: 400px;
+    width: auto;
+    margin: 0 auto;
+}
+
+.carousel-inner{
+    background-color: #777;
+}
+
+.carousel{
+    margin-top: 16px;
+}
+
+.progress{
+    margin-top: 16px;
+}
