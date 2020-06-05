@@ -15,3 +15,26 @@
 .progress{
     margin-top: 16px;
 }
+
+body {
+    background: rgba(211,211,100, .5);
+    font: 20px Arial;
+}
+
+.dropzone {
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #aaa;
+    color: #aaa;
+    line-height: 150px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.dropzone.dragover {
+    color: green;
+    border: 2px dashed #000;
+}

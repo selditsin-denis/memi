@@ -15,29 +15,76 @@
 
 <body>
 <!--создаем json с именами картинок-->
-<?php
-    $json_file = fopen("ml5/assets/data.json", "w");
-    $images = ['images' => array_slice(scandir("ml5/images/dataset"), 2)];
-    $result = json_encode($images);
-    fwrite($json_file, $result);
-    fclose($json_file);
-?>
-
 <div class="container">
-    <div class="progress" >
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="dropzone" id="dropzone">Перетащите файлы сюда</div>
+    <div class="progress" id="progress" style="display: none;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div id="output"></div>
-    <p id="status"></p>
-</div>
-<div hidden>
-    <p><span id="result">...</span></p>
-    <script src="ml5/sketch.js"></script>
+    <p><span id="result" hidden></span></p><script src="ml5/sketch.js"></script>
 </div>
 
 
 
 
+<script>
+    (function() {
+        var dropzone = document.getElementById("dropzone");
+        dropzone.ondrop = function(e) {
+            this.className = 'dropzone';
+            this.innerHTML = 'Загрузка файлов';
+            e.preventDefault();
+            upload(e.dataTransfer.files);
+            var progress = document.getElementById("progress");
+            var progressbar = document.getElementById("progress-bar");
+            progress.style.display = "";
+            progressbar.style.width = "2%";
+        };
+
+        var displayUploads = function(data) {
+            for(x = 0; x < data.length; x++) {
+                anchor = document.createElement('li');
+                anchor.innerHTML = data[x].name;
+            }
+            if(data[0].result === "OK"){
+                console.log("okeke")
+                start();
+                this.innerHTML = 'Загрузка файлов';
+            }
+        };
+
+        var upload = function(files) {
+            var formData = new FormData(),
+                xhr = new XMLHttpRequest(),
+                x;
+
+            for(x = 0; x < files.length; x++) {
+                formData.append('file[]', files[x]);
+            }
+
+            xhr.onload = function() {
+                console.log(this.responseText)
+                var data = JSON.parse(this.responseText);
+                displayUploads(data);
+            };
+
+            xhr.open('post', 'upload.php');
+            xhr.send(formData);
+        };
+
+        dropzone.ondragover = function() {
+            this.className = 'dropzone dragover';
+            this.innerHTML = 'Отпустите мышку';
+            return false;
+        };
+
+        dropzone.ondragleave = function() {
+            this.className = 'dropzone';
+            this.innerHTML = 'Перетащите файлы сюда';
+            return false;
+        };
+
+    }());
+</script>
 </body>
-
 </html>

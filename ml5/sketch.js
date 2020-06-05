@@ -10,6 +10,7 @@ let displayTime = 1;
 let predictions = [];
 
 function appendImages() {
+  console.log(data)
   for (i = 0; i < data.images.length; i++) {
     imgPath = data.images[i];
     allImages.push(getImagePath(imgPath));
@@ -33,10 +34,14 @@ function drawNextImage() {
 
 function setup() {
   noCanvas();
+}
+
+function start() {
   appendImages();
   preload()
   img = createImg(allImages[0], imageReady);
   img.attribute('hidden', '', imageReady)
+  console.log('hi');
 }
 
 
@@ -76,7 +81,7 @@ function sendJson(json) {
     if (request.readyState === 4 && request.status === 200)
       document.getElementById("output").innerHTML=request.responseText;
       select('.progress-bar').attribute('style', 'width: 100%');
-    select('#status').html('Готово')
+    select('#dropzone').html('Готово')
   }
   request.send(body);
 
@@ -87,13 +92,13 @@ function removeImage() {
   currentIndex++;
   if (currentIndex <= allImages.length - 1) {
     drawNextImage();
-    select('#status').html('Обработка: '+allImages[currentIndex])
+    select('#dropzone').html('Обработка: '+allImages[currentIndex])
     let percent = (currentIndex/allImages.length)*100;
     select('.progress-bar').attribute('style', 'width: '+ percent+'%');
   } else {
     savePredictions();
     printJson();
-    select('#status').html('Мемы готовятся к показу')
+    select('#dropzone').html('Мемы готовятся к показу')
   }
 
 }
