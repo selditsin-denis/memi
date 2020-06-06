@@ -8,23 +8,28 @@ let texts = []
 let display = true;
 let displayTime = 1;
 let predictions = [];
+let data;
 
-function appendImages() {
-  console.log(data)
-  for (i = 0; i < data.images.length; i++) {
-    imgPath = data.images[i];
-    allImages.push(getImagePath(imgPath));
-  }
-}
+function appendImages(dirname) {
+  jsonPath = "jsonformer.php";
 
-function preload() {
-  data = loadJSON('ml5/assets/data.json');
-}
-
-function getImagePath(imgPath) {
-  fullPath = 'ml5/images/dataset/';
-  fullPath = fullPath + imgPath;
-  return fullPath
+  let xmlhttp = new XMLHttpRequest();
+  let body = 'dirname='+dirname;
+  xmlhttp.onreadystatechange = function()
+  {
+    if (this.readyState === 4 && this.status === 200)
+    {
+      data = JSON.parse(this.responseText);
+      for (j = 0; j< data.images.length; j++){
+        imgPath = data.directory+"/"+data.images[j];
+        allImages.push(imgPath);
+      }
+      imgCreate();
+    }
+  };
+  xmlhttp.open("POST", jsonPath, true);
+  xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xmlhttp.send(body);
 }
 
 function drawNextImage() {
@@ -36,14 +41,14 @@ function setup() {
   noCanvas();
 }
 
-function start() {
-  appendImages();
-  preload()
-  img = createImg(allImages[0], imageReady);
-  img.attribute('hidden', '', imageReady)
-  console.log('hi');
+function start(dirname) {
+  appendImages(dirname);
 }
 
+function imgCreate() {
+  img = createImg(allImages[0], imageReady);
+  img.attribute('hidden', '', imageReady)
+}
 
 //Дает прогноз когда картинка загружена
 function imageReady() {
@@ -88,7 +93,6 @@ function sendJson(json) {
 }
 
 function removeImage() {
-
   currentIndex++;
   if (currentIndex <= allImages.length - 1) {
     drawNextImage();
@@ -100,7 +104,6 @@ function removeImage() {
     printJson();
     select('#dropzone').html('Мемы готовятся к показу')
   }
-
 }
 
 // Когда получаем результат

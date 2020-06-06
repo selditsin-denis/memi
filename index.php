@@ -18,18 +18,16 @@
 <div class="container">
     <div class="dropzone" id="dropzone">Перетащите файлы сюда</div>
     <div class="progress" id="progress" style="display: none;">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-bar" role="progressbar" style="width: 0" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div id="output"></div>
-    <p><span id="result" hidden></span></p><script src="ml5/sketch.js"></script>
+    <p><span id="result" hidden></span></p><script src="scripts/sketch.js"></script>
 </div>
-
-
-
 
 <script>
     (function() {
         var dropzone = document.getElementById("dropzone");
+        var data;
         dropzone.ondrop = function(e) {
             this.className = 'dropzone';
             this.innerHTML = 'Загрузка файлов';
@@ -42,13 +40,8 @@
         };
 
         var displayUploads = function(data) {
-            for(x = 0; x < data.length; x++) {
-                anchor = document.createElement('li');
-                anchor.innerHTML = data[x].name;
-            }
             if(data[0].result === "OK"){
-                console.log("okeke")
-                start();
+                start(data[0].dirname);
                 this.innerHTML = 'Загрузка файлов';
             }
         };
@@ -63,8 +56,7 @@
             }
 
             xhr.onload = function() {
-                console.log(this.responseText)
-                var data = JSON.parse(this.responseText);
+                data = JSON.parse(this.responseText);
                 displayUploads(data);
             };
 

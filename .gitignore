@@ -3,5 +3,7 @@ venv/
 vendor/
 result/
 test.php
-ml5/images/dataset
-ml5/assets
+scripts/images/dataset
+scripts/assets
+test
+uploads/
